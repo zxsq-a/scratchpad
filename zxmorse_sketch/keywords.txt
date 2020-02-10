@@ -1,0 +1,6 @@
+zxMorse KEYWORD1
+textToMorse KEYWORD2
+asciiConvert KEYWORD2
+morseLed KEYWORD2
+morseBeep KEYWORD2
+timerPause KEYWORD2
