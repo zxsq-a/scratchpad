@@ -13,8 +13,8 @@
 //  it is part of the myFirstLibrary class and should be used for all constructors
 //  and functions that are part of a class.
 
-int zxMorse::NUMBER_OF_ELEMENTS = 38;
-int zxMorse::MAX_SIZE = 6;
+#define NUMBER_OF_ELEMENTS 38
+#define MAX_SIZE 6
 char zxMorse::textLUT [NUMBER_OF_ELEMENTS] [MAX_SIZE] = {
  { ".-" },//a    //0
  { "-..." },//b

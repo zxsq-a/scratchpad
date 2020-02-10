@@ -34,15 +34,17 @@ class zxMorse{
     void morseBeep(char *morseString);
     void timerPause (int unitsToPause, int timeScale);
 
+    static int NUMBER_OF_ELEMENTS;
+    static int MAX_SIZE;
+    static char textLUT;
+
   private:                  
     
     //  When dealing with private variables, it is common convention to place
     //  an underscore before the variable name to let a user know the variable
     //  is private.   
     //unsigned long _curTime;
-    static const int NUMBER_OF_ELEMENTS;
-    static const int MAX_SIZE;
-    static char textLUT;
+
     
 };
 
