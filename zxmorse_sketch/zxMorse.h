@@ -33,10 +33,11 @@ class zxMorse{
     void morseLed(char *morseString);
     void morseBeep(char *morseString);
     void timerPause (int unitsToPause, int timeScale);
+    int asciiConvert(char asciiIn);
 
     static int NUMBER_OF_ELEMENTS;
     static int MAX_SIZE;
-    static char textLUT;
+    static char textLUT[38][6];
 
   private:                  
     

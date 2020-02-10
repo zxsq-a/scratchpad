@@ -13,8 +13,11 @@
 //  it is part of the myFirstLibrary class and should be used for all constructors
 //  and functions that are part of a class.
 
+#define asciiConvert zxMorse::asciiConvert
+#define morseBuild zxMorse::morseBuild
 #define NUMBER_OF_ELEMENTS 38
 #define MAX_SIZE 6
+
 char zxMorse::textLUT [NUMBER_OF_ELEMENTS] [MAX_SIZE] = {
  { ".-" },//a    //0
  { "-..." },//b
@@ -55,6 +58,9 @@ char zxMorse::textLUT [NUMBER_OF_ELEMENTS] [MAX_SIZE] = {
  { "----." },//9
  { "-----" },//0  //37
  };
+
+
+
 
 zxMorse::zxMorse(unsigned long curTime, int ledPin, int beepPin, char textString, char morseBuild){
 
