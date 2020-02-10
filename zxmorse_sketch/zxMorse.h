@@ -38,6 +38,7 @@ class zxMorse{
     static int NUMBER_OF_ELEMENTS;
     static int MAX_SIZE;
     static char textLUT[38][6];
+    static char morseBuild[256];
 
   private:                  
     

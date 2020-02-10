@@ -18,6 +18,8 @@
 #define NUMBER_OF_ELEMENTS 38
 #define MAX_SIZE 6
 
+
+
 char zxMorse::textLUT [NUMBER_OF_ELEMENTS] [MAX_SIZE] = {
  { ".-" },//a    //0
  { "-..." },//b
@@ -61,10 +63,8 @@ char zxMorse::textLUT [NUMBER_OF_ELEMENTS] [MAX_SIZE] = {
 
 
 
-
 zxMorse::zxMorse(unsigned long curTime, int ledPin, int beepPin, char textString, char morseBuild){
 
-  //  This is where the pinModes are defined for circuit operation.
   pinMode(ledPin, OUTPUT);
   pinMode(beepPin, OUTPUT);
 
@@ -72,9 +72,6 @@ zxMorse::zxMorse(unsigned long curTime, int ledPin, int beepPin, char textString
 
 }
 
-//  For the 'on', 'off' and 'flash' functions, their function return type (void) is
-//  specified before the class-function link. They also use the private variables
-//  saved in the constructor code.
 
 void zxMorse::textToMorse(char *textIn){
   char readChar[1];
@@ -98,6 +95,9 @@ void zxMorse::textToMorse(char *textIn){
     
   }
 }
+
+
+
 
 int zxMorse::asciiConvert(char asciiIn){
   int ascii = int(asciiIn);
