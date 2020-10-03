@@ -2,6 +2,7 @@ import sys
 import numpy as np
 from scipy.integrate import odeint
 import svgwrite
+import math
 
 #pendulum lengths, meters
 L1, L2 = 1, 1
@@ -55,7 +56,7 @@ y = odeint(deriv, y0, t, args=(L1, L2, m1, m2))
 #sancheck total energy
 EDRIFT = 0.05
 E = calcNRG(y0)
-sys.exit('EDRiFT of: {} oob, >0.05'.format(EDRIFT)) if np.max(np.sum(np.abs(calcNRG(y) - E))) > EDRIFT else sys.exit('complete')
+#sys.exit('EDRiFT of: {} oob, >0.05'.format(EDRIFT)) if np.max(np.sum(np.abs(calcNRG(y) - E))) > EDRIFT else sys.exit('complete')
 
 # Unpack z and theta as a function of time
 theta1, theta2 = y[:,0], y[:,2]
@@ -68,6 +69,7 @@ y2 = y1 - L2 * np.cos(theta2)
 
 #add segment to svg
 def svgAdd(xa, xb, ya, yb, svgName):
+    global loopcount
     #xa,ya are inner pendulum, xb,yb are outer
     if (loopcount == 0):
         svgwrite.shapes.Circle(center=(xb,yb), r='1px')
@@ -86,8 +88,10 @@ def svgAdd(xa, xb, ya, yb, svgName):
 
 precision=10
 di=(1/precision/dt)
-for i in range (0, t.size, di):
-    print(i//di+'/'+t.size//di)
+cast_size=int(math.floor(t.size))
+cast_di=int(math.floor(di))
+for i in range (0, cast_size, cast_di):
+    print(str(i//di)+'/'+str(t.size//di))
     svgAdd(x1, y1, x2, y2, svgPath)
     
 svgPath.save()
