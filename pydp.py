@@ -5,13 +5,13 @@ import svgwrite
 import math
 
 #pendulum lengths, meters
-L1, L2 = 1, 1
+L1, L2 = 10, 12
 #masses, kilos
-m1, m2 = 0.5, 0.5
+m1, m2 = 1, 1
 #gravity, m/s2
 g = 9.81
 #create output svg
-dwg = svgwrite.Drawing('/Users/user/Desktop/pendulum2.svg', profile='tiny', size=(1500,1500))
+dwg = svgwrite.Drawing('/Users/user/Desktop/pendulum2.svg', profile='tiny', size=(25,25))
 paths = dwg.add(dwg.g(id='paths'))
 #svg pathing storage vars
 xprev, yprev = 0,0
@@ -46,10 +46,11 @@ def calcNRG(y):
     T = 0.5 * m1 * pow((L1 * th1d), 2) + 0.5 * m2 * Ta
     return T + V
 
-tmax, dt = 30, 0.01 #how long it runs, how long between steps (quantization)
-t = np.arange(0, (tmax + dt), dt)
-#initial conds
-y0 = np.array([3 * np.pi / 7, 0, 3 * np.pi / 4, 0])
+# Maximum time, time point spacings and the time grid (all in s).
+tmax, dt = 300, 0.001
+t = np.arange(0, tmax+dt, dt)
+# Initial conditions: theta1, dtheta1/dt, theta2, dtheta2/dt.
+y0 = np.array([3*np.pi/7, 0, 3*np.pi/4, 0])
 
 #do integration
 y = odeint(deriv, y0, t, args=(L1, L2, m1, m2))
@@ -57,17 +58,16 @@ y = odeint(deriv, y0, t, args=(L1, L2, m1, m2))
 #sancheck total energy
 EDRIFT = 0.05
 E = calcNRG(y0)
-#sys.exit('EDRiFT of: {} oob, >0.05'.format(EDRIFT)) if np.max(np.sum(np.abs(calcNRG(y) - E))) > EDRIFT else sys.exit('complete')
-
+#if np.max(np.sum(np.abs(calcNRG(y) - E))) > EDRIFT:
+    #sys.exit('Maximum energy drift of {} exceeded.'.format(EDRIFT))
+    
 # Unpack z and theta as a function of time
 theta1, theta2 = y[:,0], y[:,2]
 
 # Convert to Cartesian coordinates of the two bob positions.
 x1 = L1 * np.sin(theta1)
-y1 = -L1 * np.cos(theta1) 
+y1 = L1 * np.cos(theta1)
 x2 = x1 + L2 * np.sin(theta2)
-# print("x2: ", end='')
-# print(x2)
 y2 = y1 - L2 * np.cos(theta2)
 
 #add segment to svg
@@ -101,16 +101,16 @@ di=(1/precision/dt)
 cast_size=int(math.floor(t.size))
 cast_di=int(math.floor(di))
 for i in range (0, cast_size, cast_di):
-    print(str(i//di)+'/'+str(t.size//di))
+    #print(str(i//di)+'/'+str(t.size//di))
     svgAdd(x1[i], y1[i], x2[i], y2[i], dwg, i)
 
     print("x1: ", end='')
-    print(x1[i], end='')
+    print(x1[i])#, end='')
     print(" y1: ", end='')
     print(y1[i], end='')
     print(" x2: ", end='')
     print(x2[i], end='')
-    print(" y1: ", end='')
+    print(" y2: ", end='')
     print(y2[i])
     
 dwg.save()
